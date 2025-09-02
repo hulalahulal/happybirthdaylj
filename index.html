@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摩斯密码与蝴蝶</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Ctext x="10" y="40" font-size="40"%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E') repeat;
+            background-size: 100px 100px;
+        }
+
+        .butterfly {
+            font-size: 100px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .butterfly:hover {
+            transform: scale(1.2);
+        }
+
+        .morse-container {
+            display: none; /* 初始隐藏 */
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            max-width: 900px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .morse-text {
+            max-width: 500px;
+            text-align: left;
+            flex: 1;
+        }
+
+        .morse-text p {
+            color: #1e90ff;
+            font-size: 18px;
+            line-height: 1.5;
+            background: linear-gradient(90deg, #1e90ff, #87cefa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .morse-photo {
+            max-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .butterfly {
+                font-size: 60px;
+            }
+            .morse-text p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 音乐 -->
+    <audio id="birthdayMusic" src="https://cdn.pixabay.com/download/audio/2024/06/27/audio_801c382f49.mp3?filename=happy-birthday-220024.mp3"></audio>
+
+    <!-- 蝴蝶图标 -->
+    <div class="butterfly" onclick="toggleMorseAndPlayMusic()">🦋</div>
+
+    <!-- 摩斯密码 + 图片容器 -->
+    <div class="morse-container" id="morseCode">
+        <div class="morse-text">
+            <p>
+                --..-.-.--.--../--...-..-....../--..---....-..-/-....-..--.---.-/-.....-..---..-./---.--.-....-../--.--.-.---.---/--------....--../-..-.---.-.--..-/-...--....-..---/---.--.-....-../--..---....-.../--------....--../--.---...-.-..-/--..-----.-.-../---.--.-....-../--.----.--.---./--.--...-.-..../--------....--../-...--.----.-.../-...--.--...-.-./--..-.-----.--./----.-..----.-./-------...-.--./--...-....-..../-..---........./-.-----..-...../-...----.----.--/--..-----.-.-../---.--.-....-../-------.-.-...-/--------....--../-...----.----.--/---.--.--..-.../-.-.---..--..../-.....-........./-...--.-.---.---/-..---........./-------...-.-.-/-------...-.-.-/--..-.-----.--./-.-...-.-..-..-/--------....--../-..-...-.-------/--...-....-..../-....---...---../--------....--../-.-...--...--.-/---.--.--.--.--/-...------.--.--/-.--..-..-..---/--.--.-.---.---/--------....--../-..---.-...---./--..--...-.----/--------....--../--..-.-.---.-../---..-..-...---/-.--.--.-.--..-/-..---..-.-..../--.--.-....-.--/-..-....------.-/--..--...-.----/---.-.-...---../---.-.-...---../---.--.-....-../--..........-./---.-.-...-----/--..-.----..-.-/-.--------.-.--/-..---..-.-..../--------....--../-..---..-.-..../-.--..---.-..../--.--.....----../--.-----.---....🎂
+            </p>
+        </div>
+
+        <!-- 照片 -->
+        <img src="photo.jpg" alt="祝福照片" class="morse-photo">
+    </div>
+
+    <script>
+        function toggleMorseAndPlayMusic() {
+            var morseDiv = document.getElementById('morseCode');
+            var audio = document.getElementById('birthdayMusic');
+
+            if (morseDiv.style.display === 'none' || morseDiv.style.display === '') {
+                morseDiv.style.display = 'flex'; // 使用 flex 而非 block
+                audio.play().catch(function(error) {
+                    console.error('Error playing audio:', error);
+                });
+            } else {
+                morseDiv.style.display = 'none';
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        }
+    </script>
+</body>
+</html>
